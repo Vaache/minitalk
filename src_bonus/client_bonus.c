@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vhovhann <vhovhann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 01:42:19 by vhovhann          #+#    #+#             */
-/*   Updated: 2023/06/11 08:15:50 by vhovhann         ###   ########.fr       */
+/*   Created: 2023/06/11 02:52:17 by vhovhann          #+#    #+#             */
+/*   Updated: 2023/06/11 08:17:15 by vhovhann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
 
 int	ft_atoi(char *str)
 {
@@ -39,6 +49,15 @@ int	ft_atoi(char *str)
 	return (num);
 }
 
+int	signal_count(void (*signal))
+{
+	static int	i = 0;
+
+	if ((int)signal == SIGUSR1)
+		i++;
+	return (i);
+}
+
 void	help(char c, int pid)
 {
 	int	bit;
@@ -64,9 +83,19 @@ int	main(int ac, char **av)
 	{
 		while (av[2][i] != '\0')
 		{
+			signal(SIGUSR1, (void *)&signal_count);
+			signal(SIGUSR2, (void *)&signal_count);
 			help(av[2][i], ft_atoi(av[1]));
 			i++;
 		}
+		if (ft_strlen(av[2]) == signal_count((void *)signal))
+			ft_printf("OK\n");
+		else
+			ft_printf("Error\n");
 	}
-	return (0);
+	else
+	{
+		ft_printf("Error\n");
+		exit(1);
+	}
 }
