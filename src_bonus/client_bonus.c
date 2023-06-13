@@ -6,7 +6,7 @@
 /*   By: vhovhann <vhovhann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 02:52:17 by vhovhann          #+#    #+#             */
-/*   Updated: 2023/06/11 08:17:15 by vhovhann         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:47:31 by vhovhann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	help(char c, int pid)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(500);
 		bit++;
 	}
 }
@@ -91,7 +91,7 @@ int	main(int ac, char **av)
 		if (ft_strlen(av[2]) == signal_count((void *)signal))
 			ft_printf("OK\n");
 		else
-			ft_printf("Error\n");
+			ft_printf("KO\n");
 	}
 	else
 	{
